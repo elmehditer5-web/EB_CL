@@ -1,0 +1,21 @@
+=== Starting Optimized PM Extension Processing ===
+Loading data from database...
+Opening connection with vmwres-outi220
+connection établie avec Prod
+connection établie avec Network_configuration
+connection établie avec STG_BO
+connection établie avec Annexe
+100%|██████████████████████████████████████████████████████████████████████████████████████████| 86111/86111 [00:40<00:00, 2116.54it/s] 
+data pret
+data_fin pret
+Loaded 86177 PM records for processing
+Applying decision tree logic...
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 164, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 160, in main
+    return main_optimized()
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 119, in main_optimized
+    data_fin_processed = arbre_dec_optimized(data_fin, data, data_annexe, rule_engine)
+TypeError: arbre_dec_optimized() takes 3 positional arguments but 4 were given
