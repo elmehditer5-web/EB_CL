@@ -1,5 +1,5 @@
-# Complete Decision Rules - Exact 1:1 mapping with original arbre_dec
-# Evaluation: First match wins (stop at first matching rule)
+# Complete Decision Rules - EXACT 1:1 with original arbre_dec
+# CRITICAL: Evaluation order must be preserved (first match wins)
 
 config:
   pilot_date: "2025-12-01"
@@ -18,9 +18,11 @@ global_checks:
       commentaire: "a envoyer a TAFi_Methodes pb : multiple_PON"
     stop: true
 
-# Main decision tree - exact order matters
+# Main decision tree - COMPLETE ALL PATHS
 rules:
+  # ====================================================================================
   # PON=16
+  # ====================================================================================
   - order: 100
     name: "PON16"
     conditions:
@@ -31,7 +33,10 @@ rules:
       type: "comment_only"
       commentaire: "a envoyer a TAFi_Methodes pb : PON16"
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien=1, before_pilot
+  # ====================================================================================
+  # PON=32, PA=ZMD AMII ASTERIX
+  # ====================================================================================
+  
   - order: 200
     name: "PON32_ASTERIX_1L_BEFORE"
     conditions:
@@ -52,7 +57,6 @@ rules:
       commentaire: "A lancer en SWAP 1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien=1, after_pilot
   - order: 201
     name: "PON32_ASTERIX_1L_AFTER"
     conditions:
@@ -74,7 +78,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien=2
   - order: 202
     name: "PON32_ASTERIX_2L"
     conditions:
@@ -92,7 +95,6 @@ rules:
       commentaire: "A lancer en SWAP des 2 liaisons 1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien>2, before_pilot, odd
   - order: 203
     name: "PON32_ASTERIX_GT2_BEFORE_ODD"
     conditions:
@@ -117,7 +119,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien>2, before_pilot, even
   - order: 204
     name: "PON32_ASTERIX_GT2_BEFORE_EVEN"
     conditions:
@@ -142,7 +143,6 @@ rules:
       actions: "ajout 2 fo 1v32"
       nb_fibre: 2
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien>2 AND <=4, after_pilot
   - order: 205
     name: "PON32_ASTERIX_3TO4_AFTER"
     conditions:
@@ -166,7 +166,6 @@ rules:
       commentaire: "A lancer en SWAP de toutes les liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien>4, after_pilot, odd
   - order: 206
     name: "PON32_ASTERIX_GT4_AFTER_ODD"
     conditions:
@@ -191,7 +190,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII ASTERIX, nb_lien>4, after_pilot, even
   - order: 207
     name: "PON32_ASTERIX_GT4_AFTER_EVEN"
     conditions:
@@ -216,7 +214,10 @@ rules:
       actions: "ajout 2 fo 1v32"
       nb_fibre: 2
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=1, before
+  # ====================================================================================
+  # PON=32, PA=ZMD AMII SFR/Orange, PM=300
+  # ====================================================================================
+  
   - order: 300
     name: "PON32_SFR_300_1L_BEFORE"
     conditions:
@@ -240,7 +241,6 @@ rules:
       commentaire: "A lancer en SWAP  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=1, after
   - order: 301
     name: "PON32_SFR_300_1L_AFTER"
     conditions:
@@ -265,7 +265,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=2, before
   - order: 302
     name: "PON32_SFR_300_2L_BEFORE"
     conditions:
@@ -289,7 +288,6 @@ rules:
       commentaire: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=2, after
   - order: 303
     name: "PON32_SFR_300_2L_AFTER"
     conditions:
@@ -314,7 +312,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=3, before
   - order: 304
     name: "PON32_SFR_300_3L_BEFORE"
     conditions:
@@ -337,7 +334,6 @@ rules:
       type: "comment_only"
       commentaire: "a envoyer chez TAFi_Methode"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=3, after, swap_possible
   - order: 305
     name: "PON32_SFR_300_3L_AFTER_SWAP"
     conditions:
@@ -364,7 +360,6 @@ rules:
       commentaire: "A lancer en SWAP des 3 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien=3, after, not swap_possible
   - order: 306
     name: "PON32_SFR_300_3L_AFTER_NO_SWAP"
     conditions:
@@ -392,7 +387,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien>=4, before
   - order: 307
     name: "PON32_SFR_300_GE4L_BEFORE"
     conditions:
@@ -415,7 +409,6 @@ rules:
       type: "comment_only"
       commentaire: "pas de solution : 4 liens nro_pm, PM300, ZMD AMII SFR/Orange, PON32"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=300, nb_lien>=4, after
   - order: 308
     name: "PON32_SFR_300_GE4L_AFTER"
     conditions:
@@ -439,7 +432,10 @@ rules:
       commentaire: "A lancer en SWAP des 4 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=900, nb_lien=1
+  # ====================================================================================
+  # PON=32, PA=ZMD AMII SFR/Orange, PM=900
+  # ====================================================================================
+  
   - order: 310
     name: "PON32_SFR_900_1L_ERROR"
     conditions:
@@ -459,7 +455,6 @@ rules:
       type: "error"
       commentaire: "erreur : PM == 900 + nb_lien_nro_PM == 1"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=900, nb_lien=2, before
   - order: 311
     name: "PON32_SFR_900_2L_BEFORE"
     conditions:
@@ -483,7 +478,6 @@ rules:
       commentaire: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=900, nb_lien=2, after
   - order: 312
     name: "PON32_SFR_900_2L_AFTER"
     conditions:
@@ -508,7 +502,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=900, 3<=nb_lien<=4
   - order: 313
     name: "PON32_SFR_900_3TO4L"
     conditions:
@@ -531,7 +524,6 @@ rules:
       type: "comment_only"
       commentaire: "a envoyer chez TAFi_Methode"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=900, nb_lien>4
   - order: 314
     name: "PON32_SFR_900_GT4L"
     conditions:
@@ -553,7 +545,10 @@ rules:
       actions: "ajout 2 fo 1v32"
       nb_fibre: 2
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=1
+  # ====================================================================================
+  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000
+  # ====================================================================================
+  
   - order: 320
     name: "PON32_SFR_1000_1L_ERROR"
     conditions:
@@ -573,7 +568,6 @@ rules:
       type: "error"
       commentaire: "erreur : PM == 900 + nb_lien_nro_PM == 1"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=2, before
   - order: 321
     name: "PON32_SFR_1000_2L_BEFORE"
     conditions:
@@ -598,7 +592,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=2, after
   - order: 322
     name: "PON32_SFR_1000_2L_AFTER"
     conditions:
@@ -622,7 +615,6 @@ rules:
       commentaire: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=3, before
   - order: 323
     name: "PON32_SFR_1000_3L_BEFORE"
     conditions:
@@ -647,7 +639,6 @@ rules:
       actions: "ajout 3 fo 1v32"
       nb_fibre: 3
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=3, after
   - order: 324
     name: "PON32_SFR_1000_3L_AFTER"
     conditions:
@@ -671,7 +662,6 @@ rules:
       commentaire: "A lancer en SWAP des 3 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=4, before
   - order: 325
     name: "PON32_SFR_1000_4L_BEFORE"
     conditions:
@@ -696,7 +686,6 @@ rules:
       actions: "ajout 2 fo 1v32"
       nb_fibre: 2
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=4, after
   - order: 326
     name: "PON32_SFR_1000_4L_AFTER"
     conditions:
@@ -720,7 +709,6 @@ rules:
       commentaire: "A lancer en SWAP des 4 liaisons  1v32 vers 1v64"
       actions: "Swap 1v32 vers 1v64"
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=5
   - order: 327
     name: "PON32_SFR_1000_5L"
     conditions:
@@ -742,7 +730,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=6
   - order: 328
     name: "PON32_SFR_1000_6L"
     conditions:
@@ -764,7 +751,6 @@ rules:
       actions: "ajout 3 fo 1v32"
       nb_fibre: 3
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=8
   - order: 329
     name: "PON32_SFR_1000_8L"
     conditions:
@@ -786,7 +772,6 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=ZMD AMII SFR/Orange, PM=1000, nb_lien=other
   - order: 330
     name: "PON32_SFR_1000_OTHER"
     conditions:
@@ -806,7 +791,10 @@ rules:
       type: "comment_only"
       commentaire: "a envoyer chez TAFi_Methode"
 
+  # ====================================================================================
   # PON=32, PA=RIP Altitude
+  # ====================================================================================
+  
   - order: 400
     name: "PON32_RIP_ALTITUDE"
     conditions:
@@ -822,7 +810,10 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=32, PA=other, even
+  # ====================================================================================
+  # PON=32, PA=other (catch-all for PON32)
+  # ====================================================================================
+  
   - order: 410
     name: "PON32_OTHER_EVEN"
     conditions:
@@ -841,7 +832,6 @@ rules:
       actions: "ajout 2 fo 1v32"
       nb_fibre: 2
 
-  # PON=32, PA=other, odd
   - order: 411
     name: "PON32_OTHER_ODD"
     conditions:
@@ -860,7 +850,10 @@ rules:
       actions: "ajout 1 fo 1v32"
       nb_fibre: 1
 
-  # PON=64, PA=ZMD AMII SFR/Orange, PM=300
+  # ====================================================================================
+  # PON=64, PA=ZMD AMII SFR/Orange
+  # ====================================================================================
+  
   - order: 500
     name: "PON64_SFR_300"
     conditions:
@@ -879,7 +872,6 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=64, PA=ZMD AMII SFR/Orange, PM=900, fibre_en_attente
   - order: 501
     name: "PON64_SFR_900_ATTENTE"
     conditions:
@@ -901,7 +893,6 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=64, PA=ZMD AMII SFR/Orange, PM=900, no fibre_en_attente
   - order: 502
     name: "PON64_SFR_900_NO_ATTENTE"
     conditions:
@@ -923,7 +914,6 @@ rules:
       actions: "ajout 2 fo 1v64"
       nb_fibre: 2
 
-  # PON=64, PA=ZMD AMII SFR/Orange, PM=1000, fibre_en_attente
   - order: 503
     name: "PON64_SFR_1000_ATTENTE"
     conditions:
@@ -945,7 +935,6 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=64, PA=ZMD AMII SFR/Orange, PM=1000, no fibre_en_attente
   - order: 504
     name: "PON64_SFR_1000_NO_ATTENTE"
     conditions:
@@ -967,7 +956,12 @@ rules:
       actions: "ajout 3 fo 1v64"
       nb_fibre: 3
 
-  # PON=64, PA=ZMD AMII ASTERIX, nom_sfp in annexe, type_liaison=INI, nb_lien=1
+  # ====================================================================================
+  # PON=64, PA=ZMD AMII ASTERIX - CRITICAL: Check nom_sfp_in_annexe FIRST
+  # ====================================================================================
+  
+  # These 4 rules MUST come before the catch-all PON64_OTHER rule
+  
   - order: 510
     name: "PON64_ASTERIX_ELIG_INI_1L"
     conditions:
@@ -991,7 +985,6 @@ rules:
       commentaire: "A lancer en SWAP de liaison 1v64 vers 1v128"
       actions: "Swap 1v64 vers 1v128"
 
-  # PON=64, PA=ZMD AMII ASTERIX, nom_sfp in annexe, type_liaison=INI, nb_lien!=1
   - order: 511
     name: "PON64_ASTERIX_ELIG_INI_NE1L"
     conditions:
@@ -1015,7 +1008,6 @@ rules:
       commentaire: "A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64"
       actions: "Swap 1v64 vers 1v128 + ajout 1 tiroir 64"
 
-  # PON=64, PA=ZMD AMII ASTERIX, nom_sfp in annexe, type_liaison!=INI
   - order: 512
     name: "PON64_ASTERIX_ELIG_NOT_INI"
     conditions:
@@ -1037,7 +1029,6 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=64, PA=ZMD AMII ASTERIX, nom_sfp not in annexe
   - order: 513
     name: "PON64_ASTERIX_NOT_ELIG"
     conditions:
@@ -1056,7 +1047,10 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=64, PA=other
+  # ====================================================================================
+  # PON=64, PA=other (catch-all for PON64)
+  # ====================================================================================
+  
   - order: 520
     name: "PON64_OTHER"
     conditions:
@@ -1072,7 +1066,10 @@ rules:
       actions: "ajout 1 fo 1v64"
       nb_fibre: 1
 
-  # PON=128
+  # ====================================================================================
+  # PON=128 (final catch-all)
+  # ====================================================================================
+  
   - order: 600
     name: "PON128"
     conditions:
