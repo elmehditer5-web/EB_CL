@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 193, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 155, in main
+    return main_optimized()
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 106, in main_optimized
+    data, data_fin, data_annexe = get_formated_data()
+                                  ~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\db_related_functions.py", line 65, in get_formated_data
+    return format_data(data_prod_info_eb_zmd, data_croissance, data_liaison, data_sfp, data_fin, data_STG, data_Annexe)
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions_optimized.py", line 723, in format_data
+    return format_data_optimized(
+        data_prod_info_eb_zmd, data_croissance, data_liaison,
+        data_sfp, data_fin, data_STG, data_annexe
+    )
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions_optimized.py", line 588, in format_data_optimized
+    data.loc[multiple_pon_ids, 'multiple_PON'] = True
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexing.py", line 907, in __setitem__
+    indexer = self._get_setitem_indexer(key)
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexing.py", line 774, in _get_setitem_indexer
+    return self._convert_tuple(key)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexing.py", line 989, in _convert_tuple
+    keyidx = [self._convert_to_indexer(k, axis=i) for i, k in enumerate(key)]
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexing.py", line 1522, in _convert_to_indexer
+    return self._get_listlike_indexer(key, axis)[1]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexing.py", line 1558, in _get_listlike_indexer
+    keyarr, indexer = ax._get_indexer_strict(key, axis_name)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexes\base.py", line 6200, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexes\base.py", line 6249, in _raise_if_missing
+    raise KeyError(f"None of [{key}] are in the [{axis_name}]")
+KeyError: "None of [Index(['ADR-42075-CRAB', 'ADR-42222-SG4A', 'ADR_02810_VIV1', 'ADR_36046_PACT',\n       'ADR_59109_PIWY', 'ADR_59172_CAHY', 'ADR_59172_TUR1', 'ADR_59179_RTE1',\n       'ADR_59179_SUZ1', 'ADR_59203_HUB1',\n       ...\n       'VOFI-BELY02', 'VOFI-LISL03', 'VOFI-LISL05', 'VOFI-PRSN08',\n       'VOFI-SMDT03', 'YVFI-JOUP04', 'YVFI-JOUP05', 'YVFI-JUZI03',\n       'YVFI-SEPT01', 'YVFI-VIMA01'],\n      dtype='object', name='id_pm', length=465)] are in the [index]"
