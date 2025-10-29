@@ -1,0 +1,6 @@
+def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame, 
+                        data_annexe: pd.DataFrame, rule_engine: 'DecisionRuleEngine' = None) -> pd.DataFrame:
+    print("Starting optimized decision tree processing...")
+    # Initialize rule engine once if not provided
+    if rule_engine is None:
+        rule_engine = DecisionRuleEngine('decision_rules.yaml')
