@@ -1,6 +1,46 @@
-def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame, 
-                        data_annexe: pd.DataFrame, rule_engine: 'DecisionRuleEngine' = None) -> pd.DataFrame:
-    print("Starting optimized decision tree processing...")
-    # Initialize rule engine once if not provided
-    if rule_engine is None:
-        rule_engine = DecisionRuleEngine('decision_rules.yaml')
+data_fin pret
+Loaded 86177 PM records for processing
+Applying decision tree logic...
+Starting optimized decision tree processing...
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 164, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 160, in main
+    return main_optimized()
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 119, in main_optimized
+    data_fin_processed = arbre_dec_optimized(data_fin, data, data_annexe, rule_engine)
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions_optimized.py", line 468, in arbre_dec_optimized
+    merged_data = data_fin.merge(
+        data_frame[data_frame.columns.difference(data_fin.columns)],
+    ...<2 lines>...
+        how='left'
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+        self,
+    ...<11 lines>...
+        validate=validate,
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 170, in merge
+    op = _MergeOperation(
+        left_df,
+    ...<10 lines>...
+        validate=validate,
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 794, in __init__
+    ) = self._get_merge_keys()
+        ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 1297, in _get_merge_keys
+    right_keys.append(right._get_label_or_level_values(rk))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\generic.py", line 1909, in _get_label_or_level_values        
+    values = self.axes[axis].get_level_values(key)._values
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py", line 1832, in get_level_values
+    level = self._get_level_number(level)
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\indexes\multi.py", line 1660, in _get_level_number
+    raise ValueError(
+        f"The name {level} occurs multiple times, use a level number"
+    )
+ValueError: The name id_pm occurs multiple times, use a level number
