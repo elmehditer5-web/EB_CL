@@ -1,35 +1,49 @@
-# --- begin robust merge block ---
-
-right_df = data_frame.copy()
-
-# Ensure 'id_pm' exists as a plain COLUMN (not an index level)
-if 'id_pm' not in right_df.columns:
-    # If it's hiding in the index, bring it out
-    right_df = right_df.reset_index()
-else:
-    # If the index name (or any index level name) is also 'id_pm', kill the ambiguity
-    idx_names = list(getattr(right_df.index, 'names', [right_df.index.name]))
-    if 'id_pm' in idx_names:
-        right_df = right_df.reset_index(drop=True)
-
-# Keep only columns not already present on the left, plus the join key
-cols_to_add = ['id_pm'] + [c for c in right_df.columns
-                           if c != 'id_pm' and c not in data_fin.columns]
-right_df = right_df.loc[:, cols_to_add]
-
-# One row per id_pm on the right side to keep the join predictable
-right_df = right_df.drop_duplicates('id_pm')
-
-# Optional: if you fear accidental duplicate names elsewhere
-right_df = right_df.loc[:, ~right_df.columns.duplicated()]
-
-# Finally, the safe merge
-merged_data = data_fin.merge(
-    right_df,
-    on='id_pm',
-    how='left',
-    validate='many_to_one',   # left can repeat id_pm; right must be unique
-    suffixes=('', '_right')   # protect against surprise overlaps
-)
-
-# --- end robust merge block ---
+Opening connection with vmwres-outi220
+connection établie avec Prod
+connection établie avec Network_configuration
+connection établie avec STG_BO
+connection établie avec Annexe
+100%|██████████████████████████████████████████████████████████████████████████████████████████| 86111/86111 [01:13<00:00, 1178.21it/s]
+data pret
+data_fin pret
+Loaded 86177 PM records for processing
+Applying decision tree logic...
+Starting optimized decision tree processing...
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 164, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 160, in main
+    return main_optimized()
+  File "c:\Users\ETERRAF\Downloads\EB_CL\Main.py", line 119, in main_optimized
+    data_fin_processed = arbre_dec_optimized(data_fin, data, data_annexe, rule_engine)
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions_optimized.py", line 493, in arbre_dec_optimized
+    merged_data = data_fin.merge(
+        right_df,
+    ...<3 lines>...
+        suffixes=('', '_right')   # protect against surprise overlaps
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\frame.py", line 10832, in merge
+    return merge(
+        self,
+    ...<11 lines>...
+        validate=validate,
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 170, in merge
+    op = _MergeOperation(
+        left_df,
+    ...<10 lines>...
+        validate=validate,
+    )
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 794, in __init__
+    ) = self._get_merge_keys()
+        ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\reshape\merge.py", line 1310, in _get_merge_keys
+    left_keys.append(left._get_label_or_level_values(lk))
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\generic.py", line 1906, in _get_label_or_level_values        
+    self._check_label_or_level_ambiguity(key, axis=axis)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\generic.py", line 1868, in _check_label_or_level_ambiguity   
+    raise ValueError(msg)
+ValueError: 'id_pm' is both an index level and a column label, which is ambiguous.
