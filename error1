@@ -1,0 +1,131 @@
+
+
+
+
+
+
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+================================================================================
+CHARGEMENT DES DONNÉES
+================================================================================
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+================================================================================
+CHARGEMENT DES DONNÉES
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+ce.py --full
+
+→ Mode: JEU COMPLET
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+================================================================================
+CHARGEMENT DES DONNÉES
+================================================================================
+usage: tests_equivalence.py [-h] [-d]
+tests_equivalence.py: error: unrecognized arguments: --full
+
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py --full
+
+→ Mode: JEU COMPLET
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+================================================================================
+CHARGEMENT DES DONNÉES
+================================================================================
+usage: tests_equivalence.py [-h] [-d]
+tests_equivalence.py: error: unrecognized arguments: --full
+
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py--full 
+C:/Users/ETERRAF/Documents/anaconda3/python.exe: can't open file 'c:\\Users\\ETERRAF\\Downloads\\EB_CL\\tests_equivalence.py--full': [Errno 2] No such file or directory
+
+(base) C:\Users\ETERRAF\Downloads\EB_CL>C:/Users/ETERRAF/Documents/anaconda3/python.exe c:/Users/ETERRAF/Downloads/EB_CL/tests_equivalence.py           
+
+→ Mode: ÉCHANTILLON PAR DÉFAUT (1,000 lignes)
+   (Utiliser --full pour tester tout le jeu)
+
+================================================================================
+TEST D'ÉQUIVALENCE COMPORTEMENTALE
+================================================================================
+
+================================================================================
+CHARGEMENT DES DONNÉES
+================================================================================
+Opening connection with vmwres-outi220
+connection établie avec Prod
+connection établie avec Network_configuration
+connection établie avec STG_BO
+connection établie avec Annexe
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\tests_equivalence.py", line 283, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\tests_equivalence.py", line 277, in main
+    success = harness.run()
+  File "c:\Users\ETERRAF\Downloads\EB_CL\tests_equivalence.py", line 195, in run
+    data, data_fin, data_annexe = self.load_data()
+                                  ~~~~~~~~~~~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\tests_equivalence.py", line 39, in load_data
+    data, data_fin, data_annexe = get_formated_data()
+                                  ~~~~~~~~~~~~~~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\db_related_functions.py", line 65, in get_formated_data
+    return format_data(data_prod_info_eb_zmd, data_croissance, data_liaison, data_sfp, data_fin, data_STG, data_Annexe)
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions.py", line 682, in format_data
+    data = add_multiple_PON_columns(data)
+  File "c:\Users\ETERRAF\Downloads\EB_CL\utils\functions.py", line 760, in add_multiple_PON_columns
+    data_frame = data_frame.groupby(level='id_pm').progress_apply(check_multiple_PON)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\groupby\groupby.py", line 1363, in __getattr__
+    raise AttributeError(
+        f"'{type(self).__name__}' object has no attribute '{attr}'"
+    )
+AttributeError: 'DataFrameGroupBy' object has no attribute 'progress_apply'
