@@ -492,10 +492,18 @@ def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame,
         rule_engine = DecisionRuleEngine('decision_rules.yaml')
     
     # Reset index if id_pm is the index to avoid merge issues
-    if data_fin.index.name == 'id_pm':
+    # Only reset if id_pm is not already a column
+    if data_fin.index.name == 'id_pm' and 'id_pm' not in data_fin.columns:
         data_fin = data_fin.reset_index(drop=False)
-    if data_frame.index.name == 'id_pm':
+    elif data_fin.index.name == 'id_pm' and 'id_pm' in data_fin.columns:
+        # If id_pm is both index and column, just reset without keeping index
+        data_fin = data_fin.reset_index(drop=True)
+    
+    if data_frame.index.name == 'id_pm' and 'id_pm' not in data_frame.columns:
         data_frame = data_frame.reset_index(drop=False)
+    elif data_frame.index.name == 'id_pm' and 'id_pm' in data_frame.columns:
+        # If id_pm is both index and column, just reset without keeping index
+        data_frame = data_frame.reset_index(drop=True)
     
     # Get columns to merge (exclude those already in data_fin)
     cols_to_merge = data_frame.columns.difference(data_fin.columns).tolist()
@@ -528,13 +536,22 @@ def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame,
                      'nb_fibre_to_add', 'prio_croissance', 'actions', 
                      'Ports_nro_suffisant', 'commentaire']
     
-    for col in update_columns:
-        if col in result.columns:
-            data_fin[col] = result[col]
-    
-    # Restore index if needed
-    if 'id_pm' in data_fin.columns and data_fin.index.name != 'id_pm':
-        data_fin.set_index('id_pm', inplace=True, drop=False)
+    # Ensure data_fin has same index as result for proper assignment
+    if len(data_fin) == len(result):
+        for col in update_columns:
+            if col in result.columns:
+                data_fin[col] = result[col].values
+    else:
+        # If lengths don't match, use merge on id_pm
+        if 'id_pm' in data_fin.columns and 'id_pm' in result.columns:
+            for col in update_columns:
+                if col in result.columns:
+                    data_fin = data_fin.drop(columns=[col], errors='ignore')
+            data_fin = data_fin.merge(
+                result[['id_pm'] + [c for c in update_columns if c in result.columns]], 
+                on='id_pm', 
+                how='left'
+            )
     
     print("Optimized decision tree processing complete.")
     return data_fin
