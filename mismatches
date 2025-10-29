@@ -1,26 +1,23 @@
 column,mismatches
-rang_global,39224
-commentaire,498
-actions,494
-nb_fibre_to_add,411
-ports_nro_suffisant,100
+rang_global,27456
+commentaire,1241
+actions,1238
+nb_fibre_to_add,1108
+ports_nro_suffisant,125
 
-Here are samples of the mismatches
 
 id_pm,old.actions,new.actions
+ADR-42075-CRAB,ajout 2 fo 1v32,ajout 1 fo 1v64
 ADR_36046_PACT,ajout 1 fo 1v32,ajout 1 fo 1v64
 ADR_59227_DEL1,ajout 1 fo 1v64,ajout 1 fo 1v32
 ADR_59574_ACH1,ajout 1 fo 1v32,ajout 1 fo 1v64
-FI-02722-0003,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
+ADR_62318_GUS1,ajout 1 fo 1v64,ajout 1 fo 1v32
+FI-01195-0003,Swap 1v32 vers 1v64,ajout 1 fo 1v64
+FI-03118-0002,ajout 1 fo 1v128,ajout 1 fo 1v64
 FI-03190-0004,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-06069-0004,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-06079-000U,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-06123-0005,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-06155-0007,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-10325-0004,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-11069-0004,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-11262-001O,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-13001-0016,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-06018-000B,Swap 1v32 vers 1v64,ajout 1 fo 1v64
+FI-10325-0004,ajout 1 fo 1v64,ajout 1 fo 1v32
+FI-11262-0015,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 2 fo 1v32
 FI-13071-000E,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-13103-0002,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-13103-000P,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
@@ -48,13 +45,26 @@ FI-14327-000T,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-14341-0009,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-14366-0003,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-17074-0000,ajout 1 fo 1v128,ajout 1 fo 1v64
+FI-18033-0005,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-18033-0016,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-18033-001E,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-18205-0009,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-18213-0004,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
+FI-18255-0001,ajout 1 fo 1v32,ajout 1 fo 1v64
+FI-19031-0015,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-19227-0002,ajout 1 fo 1v64,ajout 1 fo 1v64 + extension nro
+FI-21166-000D,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
+FI-21166-000G,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-21166-000O,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
+FI-21171-0001,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-21171-0005,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-21171-000E,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-21231-000V,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-21231-001C,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-21231-002F,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
+FI-21231-003C,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-21231-003D,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
+FI-21231-003U,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-21231-005T,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-21540-0008,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-22050-000U,ajout 1 fo 1v128,ajout 1 fo 1v64
@@ -80,39 +90,20 @@ FI-29019-002H,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-29019-002R,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
 FI-29019-002X,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
 FI-29019-003A,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-29019-005Z,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-29019-0064,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-29019-0069,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-29019-006G,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-2B309-0004,ajout 1 fo 1v64,ajout 1 fo 1v64 + extension nro
-FI-30128-0005,Swap 1v64 vers 1v128 + ajout 1 tiroir 64,ajout 1 fo 1v64
-FI-30189-005F,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-30189-005P,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-31069-000W,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-31069-EPJD,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-31069-EPJH,ajout 1 fo 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-31417-0001,ajout 1 fo 1v64,Swap 1v32 vers 1v64
-FI-31417-0006,Swap 1v32 vers 1v64,Swap 1v64 vers 1v128 + ajout 1 tiroir 64
-FI-33049-0002,ajout 1 fo 1v64,ajout 1 fo 1v128
-FI-33090-0000,ajout 2 fo 1v32,ajout 2 fo 1v32 + extension nro
-FI-33122-0009,ajout 1 fo 1v64,ajout 1 fo 1v128
-FI-33122-000B,ajout 1 fo 1v64,ajout 1 fo 1v128
 
 
 id_pm,old.commentaire,new.commentaire
+ADR-42075-CRAB,ajout 2 fo 1v32,ajout 1 fo 1v64
 ADR_36046_PACT,ajout 1 fo 1v32,ajout 1 fo 1v64
 ADR_59227_DEL1,ajout 1 fo 1v64,ajout 1 fo 1v32
 ADR_59574_ACH1,ajout 1 fo 1v32,ajout 1 fo 1v64
-FI-02722-0003,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
+ADR_62318_GUS1,ajout 1 fo 1v64,ajout 1 fo 1v32
+FI-01195-0003,A lancer en SWAP des 2 liaisons 1v32 vers 1v64,ajout 1 fo 1v64
+FI-03118-0002,ajout 1 fo 1v128,ajout 1 fo 1v64
 FI-03190-0004,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-06069-0004,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-06079-000U,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-06123-0005,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-06155-0007,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
-FI-10325-0004,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
-FI-11069-0004,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
-FI-11262-001O,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-13001-0016,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-06018-000B,A lancer en SWAP des 2 liaisons 1v32 vers 1v64,ajout 1 fo 1v64
+FI-10325-0004,ajout 1 fo 1v64,ajout 1 fo 1v32
+FI-11262-0015,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 2 fo 1v32
 FI-13071-000E,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 FI-13103-0002,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 FI-13103-000P,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
@@ -140,13 +131,26 @@ FI-14327-000T,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajo
 FI-14341-0009,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-14366-0003,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-17074-0000,ajout 1 fo 1v128,ajout 1 fo 1v64
+FI-18033-0005,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 FI-18033-0016,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-18033-001E,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 FI-18205-0009,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-18213-0004,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
+FI-18255-0001,ajout 1 fo 1v32,ajout 1 fo 1v64
+FI-19031-0015,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-19227-0002,ajout 1 fo 1v64,ajout 1 fo 1v64 + extension nro
+FI-21166-000D,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
+FI-21166-000G,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-21166-000O,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
+FI-21171-0001,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-21171-0005,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-21171-000E,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-21231-000V,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-21231-001C,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-21231-002F,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
+FI-21231-003C,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-21231-003D,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
+FI-21231-003U,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-21231-005T,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-21540-0008,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-22050-000U,ajout 1 fo 1v128,ajout 1 fo 1v64
@@ -173,21 +177,14 @@ FI-29019-002R,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajo
 FI-29019-002X,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
 FI-29019-003A,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 FI-29019-005Z,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-29019-0064,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64,ajout 1 fo 1v64
-FI-29019-0069,ajout 1 fo 1v64,A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64
 
 
 id_pm,old.nb_fibre_to_add,new.nb_fibre_to_add
-FI-02722-0003,1,0
+ADR-42075-CRAB,2,1
+FI-01195-0003,0,1
 FI-03190-0004,0,1
-FI-06069-0004,0,1
-FI-06079-000U,0,1
-FI-06123-0005,0,1
-FI-06155-0007,1,0
-FI-10325-0004,1,0
-FI-11069-0004,1,0
-FI-11262-001O,0,1
-FI-13001-0016,0,1
+FI-06018-000B,0,1
+FI-11262-0015,0,2
 FI-13071-000E,1,0
 FI-13103-0002,1,0
 FI-13103-000P,0,1
@@ -214,58 +211,248 @@ FI-14327-000L,1,0
 FI-14327-000T,1,0
 FI-14341-0009,0,1
 FI-14366-0003,0,1
+FI-18033-0005,1,0
 FI-18033-0016,0,1
 FI-18033-001E,1,0
+FI-18205-0009,0,1
+FI-18213-0004,1,0
+FI-19031-0015,0,1
+FI-21166-000D,1,0
+FI-21166-000G,0,1
+FI-21166-000O,1,0
+FI-21171-0001,0,1
+FI-21171-0005,0,1
+FI-21171-000E,0,1
+FI-21231-000V,0,1
+FI-21231-001C,0,1
+FI-21231-002F,1,0
+FI-21231-003C,0,1
+FI-21231-003D,0,1
+FI-21231-003U,0,1
+FI-21231-005T,0,1
+FI-21540-0008,0,1
+FI-22278-001D,0,1
+FI-25056-001T,1,0
+FI-25056-003D,1,0
+FI-25284-0006,0,1
+FI-25284-0007,1,0
+FI-25388-0004,1,0
+FI-25388-000D,0,1
+FI-25388-000U,1,0
+FI-25428-0000,1,0
+FI-28134-0001,1,0
+FI-29019-0004,0,1
+FI-29019-000G,0,1
+FI-29019-001I,0,1
+FI-29019-001M,1,0
+FI-29019-0027,0,1
+FI-29019-0029,0,1
+FI-29019-002B,1,0
+FI-29019-002H,1,0
+FI-29019-002R,1,0
+FI-29019-002X,0,1
+FI-29019-003A,1,0
+FI-29019-005Z,0,1
+FI-29019-0064,0,1
+FI-29019-0069,1,0
+FI-29019-006G,0,1
+FI-30128-0005,0,1
+FI-30189-001B,1,0
+FI-30189-001Q,1,0
+FI-30189-0026,0,1
+FI-30189-002M,0,1
+FI-30189-0033,1,0
+FI-30189-0037,1,0
+FI-30189-003A,1,0
+FI-30189-003K,1,0
+FI-30189-005F,1,0
+FI-30189-005P,1,0
+FI-31069-000W,1,0
+FI-31069-EPJD,1,0
+FI-31069-EPJH,1,0
+FI-31149-000G,1,0
+FI-31149-000V,0,1
+FI-31149-0019,0,1
+FI-31417-0001,1,0
+FI-31417-0006,0,1
+FI-31557-000F,0,1
+FI-33013-0007,0,1
+FI-33032-000I,1,0
+FI-33039-000I,0,1
+FI-33039-0017,1,0
+FI-33039-0019,0,1
+FI-33075-000Q,0,1
+FI-33119-0006,0,1
+FI-33119-000A,0,1
+FI-33119-0011,2,1
+FI-33167-000G,0,1
+FI-33167-000J,0,1
+FI-33249-0011,0,1
+FI-33281-000K,0,1
+FI-33281-000L,0,1
+FI-33281-000N,0,1
+FI-33281-002S,0,1
+FI-33281-003M,0,1
+FI-33449-0002,0,1
+FI-33449-0008,0,1
+FI-33522-001K,0,1
+FI-33522-0020,0,1
+FI-33522-0021,0,1
+FI-33522-002B,0,1
+FI-33550-000T,1,0
+FI-33550-000Y,1,0
+FI-33550-001F,0,1
+FI-34108-000Z,0,1
+FI-34301-000E,0,1
+FI-35024-000G,0,1
+FI-35051-0002,0,1
+FI-35055-0007,1,0
+FI-35115-0004,0,1
+
+
+id_pm,old.ports_nro_suffisant,new.ports_nro_suffisant
+FI-38421-001C,oui,non
+FI-38421-001J,oui,non
+FI-45284-0004,non,oui
+FI-45284-0007,oui,non
+FI-69283-0002,non,oui
+FI-69283-0005,oui,non
+FI-69283-000G,non,oui
+FI-69283-000H,non,oui
+FI-77296-0008,non,oui
+FI-77296-000I,non,oui
+FI-77296-000K,non,oui
+FI-78073-000C,non,oui
+FI-78073-000G,non,oui
+FI-78073-000I,oui,non
+FI-78297-0004,oui,non
+FI-78322-0001,non,oui
+FI-78498-0009,non,oui
+FI-78498-000D,non,oui
+FI-78498-000K,non,oui
+FI-78498-000O,non,oui
+FI-78498-0015,non,oui
+FI-78498-0017,non,oui
+FI-78498-001A,oui,non
+FI-78545-0001,oui,non
+FI-78545-000D,non,oui
+FI-78545-000E,oui,non
+FI-78640-0009,oui,non
+FI-78640-000J,non,oui
+FI-78640-000K,oui,non
+FI-78640-000L,non,oui
+FI-78640-000V,oui,non
+FI-78686-0002,oui,non
+FI-78686-0006,non,oui
+FI-78686-000A,non,oui
+FI-78686-000E,non,oui
+FI-78686-000N,oui,non
+FI-91027-0007,oui,non
+FI-91027-000R,non,oui
+FI-91027-000Z,oui,non
+FI-91027-0015,oui,non
+FI-91027-001B,oui,non
+FI-91377-001F,non,oui
+FI-91377-001X,oui,non
+FI-91377-001Z,non,oui
+FI-91377-002C,oui,non
+FI-91479-0003,non,oui
+FI-93007-000A,non,oui
+FI-93007-000X,oui,non
+FI-93007-0017,non,oui
+FI-93007-0019,non,oui
+FI-93007-0021,oui,non
+FI-93046-0013,non,oui
+FI-93046-0016,oui,non
+FI-93046-0018,non,oui
+FI-93046-001D,oui,non
+FI-93046-001K,oui,non
+FI-93046-001R,oui,non
+FI-93071-001Z,oui,non
+FI-94054-0002,non,oui
+FI-94054-0005,non,oui
+FI-94054-0007,oui,non
 
 
 id_pm,old.rang_global,new.rang_global
-28024PM042,65908,65915
-28024PM043,52402,52409
-28048PM055,11441,11446
-28122PM056,1010,1011
-28122PM057,67485,67492
-28218PM001,14612,14616
-28218PM002,52530,52537
-28218PM003,12904,12910
-28218PM007,15754,15758
-28218PM009,35191,35185
-28218PM013,11223,11227
-28218PM018,19883,19886
-28218PM019,11268,11272
-28218PM021,35596,35590
-28218PM023,8524,8526
-28218PM030,12908,12914
-28220PM031,1413,1414
-28220PM033,12224,12230
-28220PM034,40008,40014
-28220PM036,12178,12184
-28220PM038,50361,50367
-28220PM039,50273,50279
-28220PM040,43430,43435
-28253PM052,14434,14438
-28253PM053,35577,35571
-28403PM048,15490,15494
-4CF-SITE-BLV09,53586,53592
-4CF-SITE-BLV10,55355,55361
-4CF-SITE-BLV11,49919,49925
-4CF-SITE-BLV12,39862,39868
-4CF-SITE-BLV13,53573,53579
-4CF-SITE-DEA05,68513,68520
-4CF-SITE-DEA06,47726,47733
-4CF-SITE-DEA14,66467,66474
-4CF-SITE-DEA15,51444,51450
-4CF-SITE-TOQ01,59571,59577
-4CF-SITE-TOQ02,53678,53684
-4CF-SITE-TOQ05,1176,1177
-4CF-SITE-TOQ06,14918,14920
-4CF-SITE-TRG02,67566,67573
-4CF-SITE-TRG04,54539,54545
-4CF-SITE-TRG05,58587,58593
-4CF-SITE-TRV01,49933,49939
-4CF-SITE-TRV05,34692,34686
-4CF-SITE-TRV06,67963,67970
-4CF-SITE-TRV11,56816,56822
-4CF-SITE-TRV14,58481,58487
-4CF-SITE-TRV15,10521,10525
-4CF-SITE-TRV17,45285,45291
-4CF-SITE-TRV18,35811,35805
+28048PM055,11441,11431
+28218PM001,14612,14606
+28218PM003,12904,12898
+28218PM004,6219,6215
+28218PM007,15754,15750
+28218PM011,25662,25659
+28218PM013,11223,11213
+28218PM014,3612,3611
+28218PM018,19883,19877
+28218PM019,11268,11258
+28218PM020,21932,21927
+28218PM023,8524,8516
+28218PM026,22658,22653
+28218PM027,4744,4742
+28218PM030,12908,12902
+28220PM033,12224,12218
+28220PM034,40008,40013
+28220PM035,25749,25746
+28220PM036,12178,12172
+28253PM052,14434,14428
+28388PM049,25474,25471
+28388PM050,6027,6023
+28403PM048,15490,15486
+4CF-SITE-BLV12,39862,39867
+4CF-SITE-TOQ06,14918,14914
+4CF-SITE-TOQ07,17405,17399
+4CF-SITE-TRV09,21101,21096
+4CF-SITE-TRV13,5381,5377
+4CF-SITE-TRV15,10521,10511
+4CF-SITE-TRV16,17344,17338
+4CF-SITE-TRV19,21106,21101
+ADR-42005-AB6A,6262,6258
+ADR-42005-AB8A,9295,9284
+ADR-42013-BF1A,16715,16711
+ADR-42013-BF2A,17034,17028
+ADR-42018-BESA,14884,14881
+ADR-42018-BESB,13449,13442
+ADR-42019-BOE2,20567,20560
+ADR-42042-CHBA,22171,22166
+ADR-42046-CD2A,22197,22192
+ADR-42061-CHEA,4736,4734
+ADR-42064-CHUY,11703,11694
+ADR-42073-COTA,6437,6433
+ADR-42074-CT2A,5179,5175
+ADR-42075-CRAA,22498,22493
+ADR-42079-CU1A,16358,16355
+ADR-42079-CU2A,5177,5173
+ADR-42090-ESSA,20238,20231
+ADR-42094-FR6A,14678,14672
+ADR-42094-FR7A,22632,22627
+ADR-42094-FR8A,2917,2916
+ADR-42107-GUMI,22564,22559
+ADR-42126-LURA,18206,18200
+ADR-42145-MOTA,3017,3016
+ADR-42150-MVEA,5054,5052
+ADR-42155-NV1A,13071,13065
+ADR-42155-NV2A,6196,6192
+ADR-42172-PF2A,16001,15997
+ADR-42181-RG1A,20599,20592
+ADR-42192-RCAA,5222,5218
+ADR-42200-SP1A,24752,24749
+ADR-42200-SP2A,15203,15199
+ADR-42201-APPA,22310,22305
+ADR-42205-SBC2,40675,40680
+ADR-42206-SO1A,7601,7596
+ADR-42206-SO2A,10173,10163
+ADR-42212-CF2A,6370,6366
+ADR-42222-SG2A,13263,13257
+ADR-42230-GL1A,7570,7565
+ADR-42230-GL1B,41091,41096
+ADR-42233-SH2A,22247,22242
+ADR-42286-SROA,6427,6423
+ADR-42296-SEDA,3943,3942
+ADR-44001-WAXU,19305,19299
+ADR-44002-LINA,8435,8427
+ADR-44002-QATA,41246,41251
+ADR-44002-ZIKA,43907,43912
+ADR-44007-SKAY,8302,8294
+ADR-44012-ALAN,10942,10932
+ADR-44014-ANTO,39231,39235
+ADR-44015-CAQE,26003,26000
