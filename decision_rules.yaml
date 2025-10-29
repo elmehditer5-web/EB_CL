@@ -1,0 +1,317 @@
+# Decision tree extracted from arbre_dec function
+# Rules are evaluated in order; first match wins
+# Variables available in context:
+#   PON, PA, PM, nb_lien_nro_PM, before_pilot_date, SWAP_possible,
+#   type_liaison, nom_sfp, fibre_en_attente, multiple_PON
+
+# Global checks (apply before tree traversal)
+global_checks:
+  - condition: "multiple_PON == True"
+    action: "send_to_tafi"
+    comment: "a envoyer a TAFi_Methodes pb : multiple_PON"
+    stop: true
+
+# Main decision tree
+rules:
+  # PON == 16
+  - pon: 16
+    action: "send_to_tafi"
+    comment: "a envoyer a TAFi_Methodes pb : PON16"
+
+  # PON == 32 cases
+  - pon: 32
+    pa: "ZMD AMII ASTERIX"
+    subrules:
+      - nb_lien: 1
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP 1v32 vers 1v64"
+          - condition: "before_pilot_date == False"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+
+      - nb_lien: 2
+        action: "SWAP"
+        operation: "Swap 1v32 vers 1v64"
+        comment: "A lancer en SWAP des 2 liaisons 1v32 vers 1v64"
+
+      - nb_lien: "3-4"  # nb_lien > 2 and nb_lien <= 4
+        conditions:
+          - condition: "before_pilot_date == True and nb_lien % 2 == 1"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+          - condition: "before_pilot_date == True and nb_lien % 2 == 0"
+            action: "FO"
+            operation: "ajout 2 fo 1v32"
+            comment: "ajout 2 fo 1v32"
+            nb_fibre: 2
+          - condition: "before_pilot_date == False and nb_lien <= 4"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP de toutes les liaisons  1v32 vers 1v64"
+          - condition: "before_pilot_date == False and nb_lien > 4"
+            fallthrough: "check_parity"
+
+      - nb_lien: ">4"  # nb_lien > 4
+        check_parity:
+          - condition: "nb_lien % 2 == 1"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+          - condition: "nb_lien % 2 == 0"
+            action: "FO"
+            operation: "ajout 2 fo 1v32"
+            comment: "ajout 2 fo 1v32"
+            nb_fibre: 2
+
+  - pon: 32
+    pa: "ZMD AMII SFR/Orange"
+    pm: "300"
+    subrules:
+      - nb_lien: 1
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP  1v32 vers 1v64"
+          - condition: "before_pilot_date == False"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+
+      - nb_lien: 2
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
+          - condition: "before_pilot_date == False"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+
+      - nb_lien: 3
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "send_to_tafi"
+            comment: "a envoyer chez TAFi_Methode"
+          - condition: "before_pilot_date == False and SWAP_possible == True"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 3 liaisons  1v32 vers 1v64"
+          - condition: "before_pilot_date == False and SWAP_possible == False"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+
+      - nb_lien: ">=4"
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "no_solution"
+            comment: "pas de solution : 4 liens nro_pm, PM300, ZMD AMII SFR/Orange, PON32"
+          - condition: "before_pilot_date == False"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 4 liaisons  1v32 vers 1v64"
+
+  - pon: 32
+    pa: "ZMD AMII SFR/Orange"
+    pm: "900"
+    subrules:
+      - nb_lien: 1
+        action: "error"
+        comment: "erreur : PM == 900 + nb_lien_nro_PM == 1"
+
+      - nb_lien: 2
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
+          - condition: "before_pilot_date == False"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+
+      - nb_lien: "3-4"
+        action: "send_to_tafi"
+        comment: "a envoyer chez TAFi_Methode"
+
+      - nb_lien: ">4"
+        action: "FO"
+        operation: "ajout 2 fo 1v32"
+        comment: "ajout 2 fo 1v32"
+        nb_fibre: 2
+
+  - pon: 32
+    pa: "ZMD AMII SFR/Orange"
+    pm: "1000"
+    subrules:
+      - nb_lien: 1
+        action: "error"
+        comment: "erreur : PM == 900 + nb_lien_nro_PM == 1"
+
+      - nb_lien: 2
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "FO"
+            operation: "ajout 1 fo 1v32"
+            comment: "ajout 1 fo 1v32"
+            nb_fibre: 1
+          - condition: "before_pilot_date == False"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 2 liaisons  1v32 vers 1v64"
+
+      - nb_lien: 3
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "FO"
+            operation: "ajout 3 fo 1v32"
+            comment: "ajout 3 fo 1v32"
+            nb_fibre: 3
+          - condition: "before_pilot_date == False"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 3 liaisons  1v32 vers 1v64"
+
+      - nb_lien: 4
+        conditions:
+          - condition: "before_pilot_date == True"
+            action: "FO"
+            operation: "ajout 2 fo 1v32"
+            comment: "ajout 2 fo 1v32"
+            nb_fibre: 2
+          - condition: "before_pilot_date == False"
+            action: "SWAP"
+            operation: "Swap 1v32 vers 1v64"
+            comment: "A lancer en SWAP des 4 liaisons  1v32 vers 1v64"
+
+      - nb_lien: 5
+        action: "FO"
+        operation: "ajout 1 fo 1v32"
+        comment: "ajout 1 fo 1v32"
+        nb_fibre: 1
+
+      - nb_lien: 6
+        action: "FO"
+        operation: "ajout 3 fo 1v32"
+        comment: "ajout 3 fo 1v32"
+        nb_fibre: 3
+
+      - nb_lien: 8
+        action: "FO"
+        operation: "ajout 1 fo 1v32"
+        comment: "ajout 1 fo 1v32"
+        nb_fibre: 1
+
+      - nb_lien: "other"
+        action: "send_to_tafi"
+        comment: "a envoyer chez TAFi_Methode"
+
+  - pon: 32
+    pa: "RIP Altitude"
+    action: "FO"
+    operation: "ajout 1 fo 1v32"
+    comment: "ajout 1 fo 1v32"
+    nb_fibre: 1
+
+  - pon: 32
+    pa: "other"
+    check_parity:
+      - condition: "nb_lien % 2 == 0"
+        action: "FO"
+        operation: "ajout 2 fo 1v32"
+        comment: "ajout 2 fo 1v32"
+        nb_fibre: 2
+      - condition: "nb_lien % 2 == 1"
+        action: "FO"
+        operation: "ajout 1 fo 1v32"
+        comment: "ajout 1 fo 1v32"
+        nb_fibre: 1
+
+  # PON == 64 cases
+  - pon: 64
+    pa: "ZMD AMII SFR/Orange"
+    pm: "300"
+    action: "FO"
+    operation: "ajout 1 fo 1v64"
+    comment: "ajout 1 fo 1v64"
+    nb_fibre: 1
+
+  - pon: 64
+    pa: "ZMD AMII SFR/Orange"
+    pm: "900"
+    subrules:
+      - condition: "fibre_en_attente == True"
+        action: "FO"
+        operation: "ajout 1 fo 1v64"
+        comment: "ajout 1 fo 1v64"
+        nb_fibre: 1
+      - condition: "fibre_en_attente == False"
+        action: "FO"
+        operation: "ajout 2 fo 1v64"
+        comment: "ajout 2 fo 1v64"
+        nb_fibre: 2
+
+  - pon: 64
+    pa: "ZMD AMII SFR/Orange"
+    pm: "1000"
+    subrules:
+      - condition: "fibre_en_attente == True"
+        action: "FO"
+        operation: "ajout 1 fo 1v64"
+        comment: "ajout 1 fo 1v64"
+        nb_fibre: 1
+      - condition: "fibre_en_attente == False"
+        action: "FO"
+        operation: "ajout 3 fo 1v64"
+        comment: "ajout 3 fo 1v64"
+        nb_fibre: 3
+
+  - pon: 64
+    pa: "ZMD AMII ASTERIX"
+    subrules:
+      - condition: "nom_sfp in annexe and type_liaison == 'INI' and nb_lien == 1"
+        action: "SWAP"
+        operation: "Swap 1v64 vers 1v128"
+        comment: "A lancer en SWAP de liaison 1v64 vers 1v128"
+      - condition: "nom_sfp in annexe and type_liaison == 'INI' and nb_lien != 1"
+        action: "SWAP_PLUS"
+        operation: "Swap 1v64 vers 1v128 + ajout 1 tiroir 64"
+        comment: "A lancer en SWAP de liaison 1v64 vers 1v128 et ajout de tiroir 64"
+      - condition: "nom_sfp in annexe and type_liaison != 'INI'"
+        action: "FO"
+        operation: "ajout 1 fo 1v64"
+        comment: "ajout 1 fo 1v64"
+        nb_fibre: 1
+      - condition: "nom_sfp not in annexe"
+        action: "FO"
+        operation: "ajout 1 fo 1v64"
+        comment: "ajout 1 fo 1v64"
+        nb_fibre: 1
+
+  - pon: 64
+    pa: "other"
+    action: "FO"
+    operation: "ajout 1 fo 1v64"
+    comment: "ajout 1 fo 1v64"
+    nb_fibre: 1
+
+  # PON == 128 case
+  - pon: 128
+    action: "FO"
+    operation: "ajout 1 fo 1v128"
+    comment: "ajout 1 fo 1v128"
+    nb_fibre: 1
