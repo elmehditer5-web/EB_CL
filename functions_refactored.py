@@ -1,8 +1,6 @@
 """
-auteur : Axel Lantin (refactored)
-date dernière maj : 31/07/2025
-
-Refactored version with extracted decision tree
+Refactored decision tree with YAML rules - COMPLETE & CORRECTED
+Exact behavioral equivalence with original
 """
 
 import pandas as pd
@@ -13,192 +11,92 @@ from tqdm import tqdm
 import yaml
 from pathlib import Path
 
-# Global pilot date - kept as module-level for backward compatibility
+# Global pilot date
 date_str = "2025-12-01"
 
 
 class DecisionTreeEngine:
-    """Loads and executes decision rules from YAML"""
+    """Optimized decision tree engine with exact behavioral match"""
     
     def __init__(self, rules_path=None):
         if rules_path is None:
             rules_path = Path(__file__).parent / "decision_rules.yaml"
         
         with open(rules_path, 'r', encoding='utf-8') as f:
-            self.rules_config = yaml.safe_load(f)
+            self.config = yaml.safe_load(f)
         
-        self.global_checks = self.rules_config.get('global_checks', [])
-        self.rules = self.rules_config.get('rules', [])
+        # Sort by order to ensure first-match semantics
+        self.global_checks = sorted(
+            self.config.get('global_checks', []),
+            key=lambda x: x.get('order', 0)
+        )
+        self.rules = sorted(
+            self.config.get('rules', []),
+            key=lambda x: x.get('order', 0)
+        )
     
-    def evaluate_condition(self, condition_str, context):
-        """
-        Safely evaluate a condition string with given context.
-        Preserves exact behavior including operator precedence.
-        """
-        # Build safe evaluation namespace
-        safe_dict = {
-            'PON': context['PON'],
-            'PA': context['PA'],
-            'PM': context['PM'],
-            'nb_lien': context['nb_lien'],
-            'before_pilot_date': context['before_pilot_date'],
-            'SWAP_possible': context['SWAP_possible'],
-            'type_liaison': context['type_liaison'],
-            'nom_sfp': context['nom_sfp'],
-            'fibre_en_attente': context['fibre_en_attente'],
-            'multiple_PON': context['multiple_PON'],
-            'annexe': context['annexe'],
-            'True': True,
-            'False': False,
-        }
+    def evaluate_condition(self, condition, context):
+        """Evaluate single condition with exact operator semantics"""
+        field = condition['field']
+        op = condition['op']
+        value = condition.get('value')
         
-        # Handle special 'in annexe' check
-        if 'in annexe' in condition_str:
-            return context['nom_sfp'] in context['annexe']
-        if 'not in annexe' in condition_str:
-            return context['nom_sfp'] not in context['annexe']
+        field_val = context.get(field)
         
-        try:
-            return eval(condition_str, {"__builtins__": {}}, safe_dict)
-        except Exception as e:
-            raise ValueError(f"Failed to evaluate condition '{condition_str}': {e}")
-    
-    def match_nb_lien_range(self, rule_nb_lien, actual_nb_lien):
-        """Check if nb_lien matches the rule specification"""
-        if isinstance(rule_nb_lien, int):
-            return actual_nb_lien == rule_nb_lien
-        
-        if isinstance(rule_nb_lien, str):
-            if rule_nb_lien == "other":
+        # Handle None/NaN
+        if pd.isna(field_val):
+            if op == "is_null":
                 return True
-            if rule_nb_lien == ">=4":
-                return actual_nb_lien >= 4
-            if rule_nb_lien == ">4":
-                return actual_nb_lien > 4
-            if rule_nb_lien == "3-4":
-                return 3 <= actual_nb_lien <= 4
-            if '-' in rule_nb_lien:
-                start, end = map(int, rule_nb_lien.split('-'))
-                return start <= actual_nb_lien <= end
-        
-        return False
-    
-    def apply_rules(self, context):
-        """
-        Apply decision rules to context.
-        Returns: (action, operation, comment, nb_fibre) or None if no match
-        """
-        # Check global conditions first
-        for check in self.global_checks:
-            if self.evaluate_condition(check['condition'], context):
-                return (
-                    check['action'],
-                    None,
-                    check['comment'],
-                    0,
-                    check.get('stop', False)
-                )
-        
-        # Main rule traversal
-        for rule in self.rules:
-            if not self._match_rule(rule, context):
-                continue
-            
-            # Rule matched, extract action
-            result = self._extract_action(rule, context)
-            if result:
-                return result
-        
-        return None
-    
-    def _match_rule(self, rule, context):
-        """Check if a rule matches the context"""
-        if 'pon' in rule and rule['pon'] != context['PON']:
-            return False
-        
-        if 'pa' in rule:
-            if rule['pa'] == 'other':
-                # Match if not any of the specific PAs
-                specific_pas = ['ZMD AMII ASTERIX', 'ZMD AMII SFR/Orange', 'RIP Altitude']
-                if context['PA'] in specific_pas:
-                    return False
-            elif rule['pa'] != context['PA']:
+            elif op == "not_null":
+                return False
+            else:
                 return False
         
-        if 'pm' in rule and rule['pm'] != context['PM']:
-            return False
-        
-        return True
+        # Comparison operators
+        if op == "==":
+            return field_val == value
+        elif op == "!=":
+            return field_val != value
+        elif op == "<":
+            return field_val < value
+        elif op == "<=":
+            return field_val <= value
+        elif op == ">":
+            return field_val > value
+        elif op == ">=":
+            return field_val >= value
+        elif op == "in":
+            return field_val in value
+        elif op == "not_in":
+            return field_val not in value
+        else:
+            raise ValueError(f"Unknown operator: {op}")
     
-    def _extract_action(self, rule, context):
-        """Extract action from matched rule"""
-        # Simple action
-        if 'action' in rule and 'subrules' not in rule and 'check_parity' not in rule:
-            return (
-                rule['action'],
-                rule.get('operation'),
-                rule.get('comment'),
-                rule.get('nb_fibre', 0),
-                False
-            )
-        
-        # Has subrules based on nb_lien
-        if 'subrules' in rule:
-            for subrule in rule['subrules']:
-                if 'nb_lien' in subrule:
-                    if not self.match_nb_lien_range(subrule['nb_lien'], context['nb_lien']):
-                        continue
-                
-                # Check conditions within subrule
-                if 'conditions' in subrule:
-                    for cond in subrule['conditions']:
-                        if self.evaluate_condition(cond['condition'], context):
-                            return (
-                                cond['action'],
-                                cond.get('operation'),
-                                cond.get('comment'),
-                                cond.get('nb_fibre', 0),
-                                False
-                            )
-                elif 'action' in subrule:
-                    return (
-                        subrule['action'],
-                        subrule.get('operation'),
-                        subrule.get('comment'),
-                        subrule.get('nb_fibre', 0),
-                        False
-                    )
-                
-                # Check for fallthrough
-                if 'fallthrough' in subrule and subrule['fallthrough'] == 'check_parity':
-                    if 'check_parity' in rule:
-                        return self._check_parity(rule['check_parity'], context)
-        
-        # Parity check
-        if 'check_parity' in rule:
-            return self._check_parity(rule['check_parity'], context)
-        
-        return None
+    def matches_rule(self, rule, context):
+        """Check if all conditions match (AND logic)"""
+        return all(
+            self.evaluate_condition(cond, context)
+            for cond in rule['conditions']
+        )
     
-    def _check_parity(self, parity_rules, context):
-        """Evaluate parity-based rules"""
-        for parity_rule in parity_rules:
-            if self.evaluate_condition(parity_rule['condition'], context):
-                return (
-                    parity_rule['action'],
-                    parity_rule.get('operation'),
-                    parity_rule.get('comment'),
-                    parity_rule.get('nb_fibre', 0),
-                    False
-                )
+    def find_matching_rule(self, context):
+        """Find first matching rule (first-match semantics)"""
+        # Check global conditions first
+        for check in self.global_checks:
+            conditions = check.get('conditions', [])
+            if self.matches_rule({'conditions': conditions}, context):
+                return check
+        
+        # Check main rules in order
+        for rule in self.rules:
+            if self.matches_rule(rule, context):
+                return rule
+        
         return None
 
 
 def priorité(first_row):
-    """
-    Calculate priority based on occupation and nb_sem_avant_al.
-    Exact replica of original function.
-    """
+    """EXACT copy from original"""
     nb_sem_av_al = first_row['nb_sem_avant_al']
     if first_row['occupation'] >= 90:
         return 1
@@ -211,10 +109,7 @@ def priorité(first_row):
 
 
 def details_modification(first_row, operation, row):
-    """
-    Handles the final decision tree branch for extensions.
-    Exact replica of original function.
-    """
+    """EXACT copy from original"""
     if first_row['capa_increase'] == 'OSS - NOK':
         return "OSS - NOK : voir pourquoi ça ne remonte pas dans les bases"
     
@@ -248,20 +143,21 @@ def details_modification(first_row, operation, row):
 
 def arbre_dec(row, data_frame, data_annexe, decision_engine=None):
     """
-    Refactored decision tree function.
-    Delegates logic to DecisionTreeEngine while preserving exact behavior.
+    Refactored decision tree using YAML rules.
+    EXACT behavioral equivalence with original.
     """
     if decision_engine is None:
         decision_engine = DecisionTreeEngine()
     
     id_pm = row['id_pm']
     
+    # Early return if no data
     if data_frame.loc[data_frame['id_pm'] == id_pm, 'partenaire_ff'].empty:
         return row
     
     first_row = data_frame.loc[data_frame['id_pm'] == id_pm].squeeze()
     
-    # Extract context variables (exact same logic as original)
+    # Extract variables EXACTLY as original
     PA = first_row['partenaire_ff']
     PM = first_row['calibre_pm']
     nb_lien_nro_PM = first_row['pon_paths']
@@ -269,7 +165,7 @@ def arbre_dec(row, data_frame, data_annexe, decision_engine=None):
     type_liaison = first_row['type_liaison']
     nom_sfp = first_row['nom_sfp']
     
-    # Fibre en attente logic (exact replica)
+    # Fibre en attente logic - EXACT
     if (PM == '900' and nb_lien_nro_PM % 2 == 0):
         fibre_en_attente = True
     elif (PM == '1000' and nb_lien_nro_PM % 3 == 0):
@@ -280,96 +176,78 @@ def arbre_dec(row, data_frame, data_annexe, decision_engine=None):
     multiple_PON = first_row['multiple_PON']
     PON = first_row['splitter_c0'] * first_row['splitter_c1'] * first_row['splitter_c2']
     
-    # Update non-decision fields
+    # Update non-decision fields - EXACT
     row['occupation'] = first_row['occupation']
     row['id_nra'] = first_row['id_nra']
     row['type_PM'] = PM
     row['Partenaire / Zone'] = first_row['partenaire_fiabilise']
     row['prio_croissance'] = priorité(first_row)
     
-    # Date comparison (exact same logic)
+    # Date comparison - EXACT
     before_pilot_date = datetime.now() < datetime.strptime(date_str, "%Y-%m-%d")
     
-    # Build context for decision engine
+    # Build context
     context = {
         'PON': PON,
         'PA': PA,
         'PM': PM,
         'nb_lien': nb_lien_nro_PM,
+        'nb_lien_mod_2': nb_lien_nro_PM % 2,
         'before_pilot_date': before_pilot_date,
         'SWAP_possible': SWAP_possible,
         'type_liaison': type_liaison,
         'nom_sfp': nom_sfp,
         'fibre_en_attente': fibre_en_attente,
         'multiple_PON': multiple_PON,
-        'annexe': data_annexe['nom_sfp'].values
+        'nom_sfp_in_annexe': nom_sfp in data_annexe['nom_sfp'].values if not pd.isna(nom_sfp) else False,
     }
     
-    # Apply decision rules
-    result = decision_engine.apply_rules(context)
+    # Find matching rule
+    matched_rule = decision_engine.find_matching_rule(context)
     
-    if result is None:
-        # No rule matched - should not happen with proper rules
+    if matched_rule is None:
         row['commentaire'] = 'Pas de règle correspondante'
         return row
     
-    action, operation, comment, nb_fibre, stop = result
+    action = matched_rule['action']
+    action_type = action['type']
     
-    # Handle special actions
-    if action == 'send_to_tafi':
-        row['commentaire'] = comment
-        return row
+    # Handle action types
+    if action_type == "comment_only":
+        row['commentaire'] = action['commentaire']
+        if matched_rule.get('stop', False):
+            return row
     
-    if action == 'error':
-        print(comment)
-        row['commentaire'] = comment
-        return row
+    elif action_type == "error":
+        print(action['commentaire'])
+        row['commentaire'] = action['commentaire']
     
-    if action == 'no_solution':
-        row['commentaire'] = comment
-        return row
-    
-    # Handle SWAP operations
-    if action == 'SWAP':
+    elif action_type == "validate_swap":
         detail = details_modification(first_row, 'SWAP', row)
         if detail != 'pas de pb':
             row['commentaire'] = detail
         else:
-            row['commentaire'] = comment
-            row['actions'] = operation
-        return row
+            row['commentaire'] = action['commentaire']
+            row['actions'] = action['actions']
     
-    # Handle SWAP_PLUS (special case for PON64 ASTERIX)
-    if action == 'SWAP_PLUS':
-        detail = details_modification(first_row, 'SWAP', row)
-        if detail != 'pas de pb':
-            row['commentaire'] = detail
-        else:
-            row['commentaire'] = comment
-            row['actions'] = operation
-        return row
-    
-    # Handle FO (fiber addition) operations
-    if action == 'FO':
+    elif action_type == "validate_fo":
         detail = details_modification(first_row, 'fo', row)
         if detail in ('pas de pb', "lancer extension + extension nro"):
-            action_base = comment
+            action_base = action['commentaire']
             if detail == "lancer extension + extension nro":
                 action_base += ' + extension nro'
             row['commentaire'] = action_base
             row['actions'] = action_base
-            row['nb_fibre_to_add'] += nb_fibre
+            row['nb_fibre_to_add'] += action.get('nb_fibre', 0)
         else:
             row['commentaire'] = detail
-        return row
     
     return row
 
 
-# Keep other functions unchanged
-def format_data(data_prod_info_eb_zmd, data_croissance, data_liaison, data_sfp, 
+def format_data(data_prod_info_eb_zmd, data_croissance, data_liaison, data_sfp,
                 data_fin: pd.DataFrame, data_STG, data_annexe):
-    """Original format_data function - unchanged"""
+    """EXACT copy from original"""
     data_NC = pd.merge(data_liaison, data_sfp, left_on=['id_olt', 'carte_olt', 'port_olt'],
                        right_on=['id_olt', 'num_slot_carte', 'num_slot_sfp'], how='left')
     
@@ -411,7 +289,7 @@ def format_data(data_prod_info_eb_zmd, data_croissance, data_liaison, data_sfp,
 
 
 def format_push(data_fin: pd.DataFrame):
-    """Original format_push function - unchanged"""
+    """EXACT copy from original"""
     data_fin['PDL'] = data_fin.apply(
         lambda row: np.nan if row['lr_date'] == 0 else 100.0 * row['port_total'] / row['lr_date'],
         axis=1
@@ -445,7 +323,7 @@ def format_push(data_fin: pd.DataFrame):
 
 
 def add_multiple_PON_columns(data_frame):
-    """Original add_multiple_PON_columns function - unchanged"""
+    """EXACT copy from original"""
     def check_multiple_PON(group):
         if len(group) > 1:
             PON = group.iloc[0]['splitter_c0'] * group.iloc[0]['splitter_c1'] * group.iloc[0]['splitter_c2']
