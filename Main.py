@@ -27,8 +27,7 @@ pd.options.mode.chained_assignment = None
 from utils.functions_optimized import (
     arbre_dec_optimized, 
     format_data_optimized, 
-    format_push_optimized,
-    DecisionRuleEngine
+    format_push_optimized
 )
 from utils.db_related_functions import get_formated_data, send_to_db
 from utils.variables_globales import dtype, dtype_data
@@ -38,9 +37,9 @@ from utils.variables_globales import dtype, dtype_data
 # =================================================================================================
 
 def process_batch(batch_data: pd.DataFrame, data: pd.DataFrame, 
-                 data_annexe: pd.DataFrame, rule_engine: DecisionRuleEngine) -> pd.DataFrame:
+                 data_annexe: pd.DataFrame) -> pd.DataFrame:
     """Process a batch of data using vectorized operations"""
-    return arbre_dec_optimized(batch_data, data, data_annexe, rule_engine)
+    return arbre_dec_optimized(batch_data, data, data_annexe)
 
 def parallel_process_dataframe(data_fin: pd.DataFrame, data: pd.DataFrame, 
                               data_annexe: pd.DataFrame, n_cores: int = None) -> pd.DataFrame:
@@ -59,12 +58,9 @@ def parallel_process_dataframe(data_fin: pd.DataFrame, data: pd.DataFrame,
     if n_cores is None:
         n_cores = mp.cpu_count() - 1  # Leave one core free
     
-    # Initialize rule engine once
-    rule_engine = DecisionRuleEngine('decision_rules.yaml')
-    
     # If dataset is small, process without parallelization
     if len(data_fin) < 1000:
-        return arbre_dec_optimized(data_fin, data, data_annexe, rule_engine)
+        return arbre_dec_optimized(data_fin, data, data_annexe)
     
     # Calculate optimal batch size
     batch_size = max(100, len(data_fin) // (n_cores * 4))
@@ -78,7 +74,7 @@ def parallel_process_dataframe(data_fin: pd.DataFrame, data: pd.DataFrame,
     with ProcessPoolExecutor(max_workers=n_cores) as executor:
         futures = []
         for batch in batches:
-            future = executor.submit(process_batch, batch, data, data_annexe, rule_engine)
+            future = executor.submit(process_batch, batch, data, data_annexe)
             futures.append(future)
         
         # Collect results
@@ -115,8 +111,7 @@ def main_optimized():
     
     # Use full vectorized processing instead of row-by-row apply
     # This is the main performance improvement
-    rule_engine = DecisionRuleEngine('decision_rules.yaml')
-    data_fin_processed = arbre_dec_optimized(data_fin, data, data_annexe, rule_engine)
+    data_fin_processed = arbre_dec_optimized(data_fin, data, data_annexe)
     
     # Alternative: Use parallel processing for very large datasets
     # data_fin_processed = parallel_process_dataframe(data_fin, data, data_annexe)
@@ -158,6 +153,40 @@ def main():
     This maintains the same interface as the original
     """
     return main_optimized()
+
+# =================================================================================================
+# = Performance Monitoring                                                                        =
+# =================================================================================================
+
+def benchmark_performance():
+    """
+    Benchmark function to compare original vs optimized performance
+    """
+    import cProfile
+    import pstats
+    from io import StringIO
+    
+    # Profile the optimized version
+    profiler = cProfile.Profile()
+    profiler.enable()
+    
+    result = main_optimized()
+    
+    profiler.disable()
+    
+    # Print profiling results
+    s = StringIO()
+    ps = pstats.Stats(profiler, stream=s).sort_stats('cumulative')
+    ps.print_stats(20)  # Top 20 time-consuming functions
+    
+    print("\n=== Performance Profile ===")
+    print(s.getvalue())
+    
+    return result
+
+# =================================================================================================
+# = Entry Point                                                                                   =
+# =================================================================================================
 
 if __name__ == '__main__':
     # Run optimized version
