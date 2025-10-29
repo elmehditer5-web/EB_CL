@@ -111,12 +111,27 @@ def vectorized_decision_tree(data: pd.DataFrame, data_annexe: pd.DataFrame,
     Vectorized implementation of decision tree logic
     Process entire dataframe at once instead of row-by-row
     """
+    # Make a copy to avoid modifying original
+    data = data.copy()
+    
+    # Ensure required columns exist with proper types
+    required_numeric = ['splitter_c0', 'splitter_c1', 'splitter_c2', 'pon_paths']
+    for col in required_numeric:
+        if col not in data.columns:
+            data[col] = 0
+        else:
+            data[col] = pd.to_numeric(data[col], errors='coerce').fillna(0).astype(int)
+    
     # Pre-compute common values
     data['PON'] = compute_pon_values(
         data['splitter_c0'].values, 
         data['splitter_c1'].values, 
         data['splitter_c2'].values
     )
+    
+    # Ensure calibre_pm exists
+    if 'calibre_pm' not in data.columns:
+        data['calibre_pm'] = '0'
     
     data['fibre_en_attente'] = vectorized_fibre_waiting(
         data['calibre_pm'], 
@@ -128,6 +143,18 @@ def vectorized_decision_tree(data: pd.DataFrame, data_annexe: pd.DataFrame,
     data['actions'] = np.nan
     data['commentaire'] = np.nan
     data['Ports_nro_suffisant'] = 'oui'
+    
+    # Ensure required string columns exist
+    if 'partenaire_ff' not in data.columns:
+        data['partenaire_ff'] = ''
+    if 'multiple_PON' not in data.columns:
+        data['multiple_PON'] = False
+    if 'elligible_swap' not in data.columns:
+        data['elligible_swap'] = False
+    if 'type_liaison' not in data.columns:
+        data['type_liaison'] = ''
+    if 'nom_sfp' not in data.columns:
+        data['nom_sfp'] = ''
     
     # Create boolean masks for different conditions
     before_swap = rule_engine.current_date < rule_engine.date_pilot
@@ -453,29 +480,45 @@ def apply_detail_modifications_batch(data: pd.DataFrame, rule_engine: DecisionRu
 # =================================================================================================
 
 def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame, 
-                        data_annexe: pd.DataFrame) -> pd.DataFrame:
+                        data_annexe: pd.DataFrame, rule_engine=None) -> pd.DataFrame:
     """
     Optimized version of arbre_dec using vectorized operations
     Process entire dataframe at once instead of row-by-row
     """
     print("Starting optimized decision tree processing...")
     
-    # Initialize rule engine
-    rule_engine = DecisionRuleEngine('decision_rules.yaml')
+    # Initialize rule engine if not provided
+    if rule_engine is None:
+        rule_engine = DecisionRuleEngine('decision_rules.yaml')
     
-    # Merge data_fin with data_frame to get all needed columns
-    merged_data = data_fin.merge(
-        data_frame[data_frame.columns.difference(data_fin.columns)], 
-        left_on='id_pm', 
-        right_on='id_pm', 
-        how='left'
-    )
+    # Reset index if id_pm is the index to avoid merge issues
+    if data_fin.index.name == 'id_pm':
+        data_fin = data_fin.reset_index(drop=False)
+    if data_frame.index.name == 'id_pm':
+        data_frame = data_frame.reset_index(drop=False)
+    
+    # Get columns to merge (exclude those already in data_fin)
+    cols_to_merge = data_frame.columns.difference(data_fin.columns).tolist()
+    cols_to_merge.append('id_pm')  # Always include id_pm for merging
+    
+    # Create a subset of data_frame with only needed columns
+    if len(cols_to_merge) > 1:  # More than just id_pm
+        right_df = data_frame[cols_to_merge].copy()
+        # Remove duplicate id_pm rows to avoid issues
+        right_df = right_df.drop_duplicates(subset=['id_pm'], keep='first')
+        merged_data = data_fin.merge(right_df, on='id_pm', how='left')
+    else:
+        merged_data = data_fin.copy()
     
     # Apply vectorized priority calculation
-    merged_data['prio_croissance'] = merged_data.apply(
-        lambda row: rule_engine.get_priority(row['occupation'], row['nb_sem_avant_al']), 
-        axis=1
-    )
+    if 'occupation' in merged_data.columns and 'nb_sem_avant_al' in merged_data.columns:
+        merged_data['prio_croissance'] = merged_data.apply(
+            lambda row: rule_engine.get_priority(
+                row['occupation'], 
+                row.get('nb_sem_avant_al', 0) if not pd.isna(row.get('nb_sem_avant_al')) else 0
+            ), 
+            axis=1
+        )
     
     # Apply vectorized decision tree
     result = vectorized_decision_tree(merged_data, data_annexe, rule_engine)
@@ -488,6 +531,10 @@ def arbre_dec_optimized(data_fin: pd.DataFrame, data_frame: pd.DataFrame,
     for col in update_columns:
         if col in result.columns:
             data_fin[col] = result[col]
+    
+    # Restore index if needed
+    if 'id_pm' in data_fin.columns and data_fin.index.name != 'id_pm':
+        data_fin.set_index('id_pm', inplace=True, drop=False)
     
     print("Optimized decision tree processing complete.")
     return data_fin
