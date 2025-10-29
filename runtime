@@ -1,0 +1,81 @@
+================================================================================
+DÉMARRAGE DU PROGRAMME
+================================================================================
+
+[1/4] Récupération des données...
+Opening connection with vmwres-outi220
+connection établie avec Prod
+connection établie avec Network_configuration
+connection établie avec STG_BO
+connection établie avec Annexe
+100%|██████████████████████████████████████████████████████████████████████████████████████████| 86111/86111 [00:47<00:00, 1830.47it/s] 
+data pret
+data_fin pret
+      ✓ 86111 lignes dans data
+      ✓ 86177 lignes dans data_fin
+      ✓ 5 SFP éligibles dans data_annexe
+
+[2/4] Application de l'arbre de décision...
+      → Utilisation du moteur de règles
+      ✓ Moteur de règles initialisé
+      ✓ 13 règles chargées
+100%|████████████████████████████████████████████████████████████████████████████████████████████| 86177/86177 [31:54<00:00, 45.00it/s] 
+      ✓ Arbre de décision appliqué
+
+[3/4] Formatage des résultats...
+      ✓ Données formatées et classées
+
+      Résumé des actions:
+        • ajout 1 fo 1v64: 31247
+        • Swap 1v64 vers 1v128: 28292
+        • Aucune action: 12941
+        • ajout 1 fo 1v128: 7692
+        • ajout 2 fo 1v32: 3714
+        • ajout 1 fo 1v32: 1058
+        • Swap 1v32 vers 1v64: 1054
+        • ajout 1 fo 1v64 + extension nro: 149
+        • ajout 1 fo 1v128 + extension nro: 20
+        • ajout 2 fo 1v32 + extension nro: 6
+
+        • Swap 1v64 vers 1v128: 28292
+        • Aucune action: 12941
+        • ajout 1 fo 1v128: 7692
+        • ajout 2 fo 1v32: 3714
+        • ajout 1 fo 1v32: 1058
+        • Swap 1v32 vers 1v64: 1054
+        • ajout 1 fo 1v64 + extension nro: 149
+        • ajout 1 fo 1v128 + extension nro: 20
+        • ajout 2 fo 1v32 + extension nro: 6
+
+        • Aucune action: 12941
+        • ajout 1 fo 1v128: 7692
+        • ajout 2 fo 1v32: 3714
+        • ajout 1 fo 1v32: 1058
+        • Swap 1v32 vers 1v64: 1054
+        • ajout 1 fo 1v64 + extension nro: 149
+        • ajout 1 fo 1v128 + extension nro: 20
+        • ajout 2 fo 1v32 + extension nro: 6
+
+        • Swap 1v32 vers 1v64: 1054
+        • ajout 1 fo 1v64 + extension nro: 149
+        • ajout 1 fo 1v128 + extension nro: 20
+        • ajout 2 fo 1v32 + extension nro: 6
+
+        • ajout 1 fo 1v64 + extension nro: 149
+        • ajout 1 fo 1v128 + extension nro: 20
+        • ajout 2 fo 1v32 + extension nro: 6
+
+        • ajout 2 fo 1v32 + extension nro: 6
+
+
+[4/4] Envoi vers la base de données...
+connection établie avec univers_prod_eb
+connection établie avec univers_prod_eb
+      ✓ Table prod_eb_kppm_zmd mise à jour
+      ✓ Table prod_eb_kppm_zmd mise à jour
+connection établie avec ODS_Prod
+      ✓ Table ods_prod_eb_zmd_verif mise à jour
+
+================================================================================
+FIN DES OPÉRATIONS - SUCCÈS
+================================================================================
