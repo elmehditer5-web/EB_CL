@@ -1,0 +1,59 @@
+Loading data...
+Opening connection with vmwres-outi220
+connection établie avec Prod
+connection établie avec Network_configuration
+connection établie avec STG_BO
+connection établie avec Annexe
+100%|██████████████████████████████████████████████████████████████████████████████████████████| 86111/86111 [00:41<00:00, 2074.93it/s] 
+data pret
+data_fin pret
+
+Comparing 46 mismatched PMs...
+
+====================================================================================================
+COMPARING: 28048PM055
+====================================================================================================
+
+Context:
+  PON: id_pm
+28048PM055    1
+Name: splitter_c0, dtype: int64 × id_pm
+28048PM055    1
+Name: splitter_c1, dtype: int64 × id_pm
+28048PM055    64
+Name: splitter_c2, dtype: int64 = id_pm
+28048PM055    64
+dtype: int64
+  PA: id_pm
+28048PM055    RIP CMIN
+Name: partenaire_ff, dtype: object
+  PM: id_pm
+28048PM055    None
+Name: calibre_pm, dtype: object
+  nb_lien: id_pm
+28048PM055    1
+Name: pon_paths, dtype: int64
+  type_liaison: id_pm
+28048PM055    INI
+Name: type_liaison, dtype: object
+  nom_sfp: id_pm
+28048PM055    SFP MPM C+
+Name: nom_sfp, dtype: object
+  elligible_swap: id_pm
+28048PM055    NON
+Name: elligible_swap, dtype: object
+Traceback (most recent call last):
+  File "c:\Users\ETERRAF\Downloads\EB_CL\trace_and_compare.py", line 230, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\trace_and_compare.py", line 222, in main
+    compare_single_pm(pm, data, data_fin, data_annexe)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\ETERRAF\Downloads\EB_CL\trace_and_compare.py", line 84, in compare_single_pm
+    if pd.notna(nom_sfp):
+       ~~~~~~~~^^^^^^^^^
+  File "C:\Users\ETERRAF\Documents\anaconda3\Lib\site-packages\pandas\core\generic.py", line 1577, in __nonzero__
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
