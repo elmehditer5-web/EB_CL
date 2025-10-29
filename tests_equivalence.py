@@ -244,12 +244,15 @@ class EquivalenceTestHarness:
 
 
 def main():
+    # Create a new parser that won't conflict with other argparse usage
     parser = argparse.ArgumentParser(
-        description='Test d\'équivalence entre version originale et refactorisée'
+        description='Test d\'équivalence entre version originale et refactorisée',
+        conflict_handler='resolve'  # This resolves conflicts with other argparse
     )
     parser.add_argument(
         '--sample', 
         type=int, 
+        default=None,
         help='Taille d\'échantillon (défaut: 1000 pour test rapide)'
     )
     parser.add_argument(
@@ -258,7 +261,8 @@ def main():
         help='Tester sur le jeu de données complet'
     )
     
-    args = parser.parse_args()
+    # Parse only known args to avoid conflicts
+    args, unknown = parser.parse_known_args()
     
     # Determine sample size
     if args.full:
