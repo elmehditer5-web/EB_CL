@@ -1,0 +1,175 @@
+{
+  "created_at": "20251030_215937",
+  "format": "csv",
+  "note": "Frozen inputs prior to any calculations",
+  "files": [
+    {
+      "name": "data_prod_info_eb_zmd",
+      "stem": "prod_info_eb_zmd",
+      "rows": 97724,
+      "csv": "prod_info_eb_zmd.csv",
+      "schema": {
+        "parse_dates": [
+          "Date Operation"
+        ],
+        "dtypes": {
+          "id_pm": "string",
+          "partenaire_ff": "string",
+          "splitter_c1": "Int64",
+          "splitter_c2": "Int64",
+          "splitter_c0": "Int64",
+          "pon_paths": "Int64",
+          "capa_increase": "string",
+          "port_libre": "Int64",
+          "port_total": "Int64",
+          "lr_cible": "Int64",
+          "lr_date": "Int64",
+          "id_nro": "string",
+          "etat_last_projet": "string",
+          "Etat": "string",
+          "Date Operation": "datetime64[ns]",
+          "calibre_pm": "string",
+          "occupation": "Float64",
+          "partenaire_fiabilise": "string",
+          "nb_pm_occup_sup_75": "Int64",
+          "id_nra": "string",
+          "Ports_dispo_ff": "Int64"
+        }
+      }
+    },
+    {
+      "name": "data_croissance",
+      "stem": "croissance",
+      "rows": 240626,
+      "csv": "croissance.csv",
+      "schema": {
+        "parse_dates": [],
+        "dtypes": {
+          "id_pm": "string",
+          "nb_sem_avant_al": "Float64"
+        }
+      }
+    },
+    {
+      "name": "data_liaison",
+      "stem": "liaison",
+      "rows": 303700,
+      "csv": "liaison.csv",
+      "schema": {
+        "parse_dates": [],
+        "dtypes": {
+          "id_pm": "string",
+          "type_liaison": "string",
+          "elligible_swap": "string",
+          "pon_path": "string",
+          "id_olt": "string",
+          "carte_olt": "Int64",
+          "port_olt": "Int64"
+        }
+      }
+    },
+    {
+      "name": "data_sfp",
+      "stem": "sfp",
+      "rows": 403075,
+      "csv": "sfp.csv",
+      "schema": {
+        "parse_dates": [],
+        "dtypes": {
+          "id_olt": "string",
+          "num_slot_carte": "Int64",
+          "num_slot_sfp": "Int64",
+          "id_nro": "string",
+          "nom_sfp": "string"
+        }
+      }
+    },
+    {
+      "name": "data_fin",
+      "stem": "data_fin",
+      "rows": 190848,
+      "csv": "data_fin.csv",
+      "schema": {
+        "parse_dates": [],
+        "dtypes": {
+          "id_pm": "string",
+          "partenaire_ff": "string",
+          "zone": "string",
+          "id_nro": "string",
+          "id_olt": "string",
+          "id_liaison": "string",
+          "port_occupe": "Int64",
+          "port_libre": "Int64",
+          "port_total": "Int64",
+          "occupation": "Float64",
+          "boitier": "string",
+          "typologie_immeuble": "string",
+          "adresse": "string",
+          "code_insee": "string",
+          "code_postal": "string",
+          "commune": "string",
+          "etat_last_projet": "string",
+          "date_extension_last_projet": "string",
+          "capa_increase": "string",
+          "date_eb_last_projet": "string",
+          "anciennete_real_eb": "string",
+          "lr_cible": "Int64",
+          "lr_date": "Int64",
+          "pdl_date": "Float64",
+          "pdl_date_en_cours": "Float64",
+          "pdm_date": "Float64",
+          "couv": "Float64",
+          "liaisons": "Int64",
+          "nb_liaisons_pm": "Int64",
+          "pon_paths": "Int64",
+          "splitter_c0": "Int64",
+          "splitter_c1": "Int64",
+          "splitter_c2": "Int64",
+          "splitter_c2_1v4": "Int64",
+          "splitter_c2_1v8": "Int64",
+          "splitter_c2_1v16": "Int64",
+          "splitter_c2_1v32": "Int64",
+          "splitter_c2_1v64": "Int64",
+          "splitter_c2_1v128": "Int64",
+          "splitter_c1_1v1": "Int64",
+          "splitter_c1_1v2": "Int64",
+          "splitter_c1_1v4": "Int64",
+          "splitter_c1_1v8": "Int64",
+          "splitter_c1_1v16": "Int64",
+          "couplage_splitter_c0": "string",
+          "couplage_splitter_c1": "string",
+          "couplage_splitter_c2": "string",
+          "lot_eb": "string"
+        }
+      }
+    },
+    {
+      "name": "data_STG",
+      "stem": "stg",
+      "rows": 315,
+      "csv": "stg.csv",
+      "schema": {
+        "parse_dates": [
+          "date_jakarta"
+        ],
+        "dtypes": {
+          "id_olt": "string",
+          "etat_jakarta": "string",
+          "date_jakarta": "datetime64[ns]"
+        }
+      }
+    },
+    {
+      "name": "data_annexe",
+      "stem": "annexe",
+      "rows": 5,
+      "csv": "annexe.csv",
+      "schema": {
+        "parse_dates": [],
+        "dtypes": {
+          "nom_sfp": "string"
+        }
+      }
+    }
+  ]
+}
